@@ -32,7 +32,7 @@ For more details, see the [original paper](https://arxiv.org/abs/1205.6412).
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/AnishSarkar22/nbga-optimization.git
 cd NBGA-TSP
 ```
 
@@ -80,7 +80,6 @@ This will launch a web interface where you can adjust algorithm parameters and v
 
 - `script.py` — Main NBGA implementation and Streamlit interface.
 - `requirements.txt` — Python dependencies.
-- `tsp/` — (If present) Contains TSP benchmark files (not required for ligand optimization).
 - Other scripts and data files as needed.
 
 ---
