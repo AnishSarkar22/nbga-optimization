@@ -1,11 +1,12 @@
 
-# NBGA Ligand Optimization
+# NBGA Optimization
 
 This project implements a **Neighborhood-Based Genetic Algorithm (NBGA)** for ligand optimization, inspired by the approach described in [An Evolutionary Approach to Drug-Design Using a Novel Neighbourhood Based Genetic Algorithm](https://arxiv.org/abs/1205.6412). The algorithm evolves ligand structures to minimize their interaction energy with a protein's active site, using a tree-based representation for ligands and a dynamic neighborhood topology for genetic operations.
 
 ## Features
 
 - **NBGA implementation** for ligand-protein binding optimization.
+- **TSP Algorithm Comparison Tool**: Compare NBGA, SWAP_GATSP, OX_SIM, and MOC_SIM on classic TSP datasets with interactive plots and tables.
 - Ligand structure represented as a variable-length tree of functional groups.
 - Interaction energy calculated using a modified Lennard-Jones potential.
 - Streamlit integration for interactive parameter tuning and visualization.
@@ -69,8 +70,8 @@ This will launch a web interface where you can adjust algorithm parameters and v
 
 ## Usage
 
-- **Adjust parameters** (population size, generations, ligand tree size, smoothing window) in the sidebar.
-- Click **Run NBGA Optimization** to start the algorithm.
+- **NBGA Ligand Optimization**: Adjust parameters and run the genetic algorithm to optimize ligand binding.
+- **TSP Algorithm Comparison**: Select the TSP comparison tool from the sidebar, choose your dataset directory, and run the comparison to visualize and compare algorithm performance.
 - View the best ligand found and its interaction energy.
 - Analyze the energy evolution plot for convergence trends.
 
@@ -78,7 +79,9 @@ This will launch a web interface where you can adjust algorithm parameters and v
 
 ## File Structure
 
-- `script.py` — Main NBGA implementation and Streamlit interface.
+- `Home.py` — Main NBGA implementation and Streamlit interface.
+- `pages/1_Ligand_Optimization.py` — Script for Ligand Optimization.
+- `pages/2_TSP_Comparison.py` — Script for TSP algorithm comparison.
 - `requirements.txt` — Python dependencies.
 - Other scripts and data files as needed.
 
