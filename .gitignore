@@ -4,7 +4,6 @@ __pycache__/
 *.py[codz]
 *$py.class
 .venv/
-/tsp/
 .DS_Store
 
 # C extensions
