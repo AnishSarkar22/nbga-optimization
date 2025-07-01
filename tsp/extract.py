@@ -1,4 +1,4 @@
-# Use this script to extract all `.gz` files from the `tsp` folder into the `tsp-dataset-extracted` folder
+# Use this script to extract all `.gz` files from the `tsp` folder into the `tsp_dataset_extracted` folder
 # Also creates the output folder if it does not exist
 
 import gzip
@@ -21,4 +21,4 @@ def extract_all_gz_files(directory, output_dir):
             extract_gz_file(gz_path, output_path)
 
 # Usage
-extract_all_gz_files("../tsp-dataset", "../tsp-dataset-extracted")
+extract_all_gz_files("../tsp_dataset", "../tsp_dataset_extracted")

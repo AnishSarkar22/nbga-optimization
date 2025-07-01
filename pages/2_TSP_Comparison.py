@@ -1,4 +1,6 @@
-# NBGA comparison on TSP - Streamlit Version
+# Neighborhood-Based Genetic Algorithm (NBGA) comparison with SWAP_GATSP, OX_SIM, and MOC_SIM 
+# applied to the Traveling Salesman Problem (TSP)
+
 import numpy as np
 import matplotlib.pyplot as plt
 import gzip
@@ -693,7 +695,7 @@ def main():
     
     # Sidebar for dataset directory input
     st.sidebar.header("Configuration")
-    dataset_dir = st.sidebar.text_input("Dataset Directory", value="../tsp-dataset")
+    dataset_dir = st.sidebar.text_input("Dataset Directory", value="./tsp_dataset")
     
     if st.sidebar.button("Run Comparison", type="primary"):
         

@@ -266,8 +266,7 @@ def nbga_ligand_optimization(pop_size=50, generations=100, tree_size=10):
     best_individual = min(population, key=compute_interaction_energy)
     return best_individual, best_energies
 
-# Run with your smoothing visualization
-if __name__ == "__main__":
+def main():
     st.title("NBGA Ligand Optimization")
     st.write("Neighborhood-Based Genetic Algorithm for Ligand-Protein Binding")
 
@@ -301,3 +300,7 @@ if __name__ == "__main__":
 
     st.markdown("---")
     st.write("Adjust parameters in the sidebar and click **Run NBGA Optimization** to start.")
+
+# Run with your smoothing visualization
+if __name__ == "__main__":
+    main()
