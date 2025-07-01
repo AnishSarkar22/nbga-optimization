@@ -14,7 +14,7 @@
 
 import streamlit as st
 
-st.title("Welcome to the Optimization App")
+st.title("Welcome to the NBGA Optimization App")
 st.markdown("""
 ### 🧰 Available Tools
 
@@ -29,6 +29,10 @@ st.markdown("""
   - Simulates ligand evolution to minimize binding energy using a genetic algorithm.
   - Visualizes the fitness (energy) evolution across generations.
   - Adjustable parameters for population size, generations, and ligand structure.
+  
+### **Reference:**  
+- [An Evolutionary Approach to Drug-Design Using a Novel Neighbourhood Based Genetic Algorithm (arXiv:1205.6412)](https://arxiv.org/abs/1205.6412)
+
 
 Select a tool from the sidebar to get started!
 """)
