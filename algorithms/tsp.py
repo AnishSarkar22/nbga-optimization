@@ -11,7 +11,6 @@ import random
 import math
 import time
 from pathlib import Path
-import streamlit as st
 import os
 
 class TSPParser:
