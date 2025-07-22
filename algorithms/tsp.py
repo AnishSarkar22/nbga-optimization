@@ -673,7 +673,7 @@ def create_comparison_plot(results, dataset_names, algorithm_names):
     plt.show()
 
 def main():
-    dataset_dir = "./tsp_dataset"  # You can change this path as needed
+    dataset_dir = "../tsp_dataset"  # You can change this path as needed
     random.seed(42)
     np.random.seed(42)
 
