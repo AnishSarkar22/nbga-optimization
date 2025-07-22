@@ -627,7 +627,11 @@ def run_algorithms(dataset_dir):
             print(f"Running {alg_name}...")
 
             pop_size = min(100, max(50, len(distance_matrix) * 2))
-            generations = min(500, max(200, len(distance_matrix) * 5))
+            
+            generations = 20000
+            
+            # USE THIS IF NEEDED LIKE 500 GENERATIONS OR USE THE ABOVE
+            # generations = min(500, max(200, len(distance_matrix) * 5))
 
             start_time = time.time()
 
