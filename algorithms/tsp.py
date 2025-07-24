@@ -592,8 +592,9 @@ class MOC_SIM(TSPSolver):
 
 
 def run_algorithms(dataset_dir):
-    datasets = ['bayg29.tsp.gz', 'gr24.tsp.gz', 'st70.tsp.gz']
-    datasets_alt = ['bayg29.tsp', 'gr24.tsp', 'st70.tsp']
+    # Updated datasets list to include the new ones
+    datasets = ['bayg29.tsp.gz', 'gr24.tsp.gz', 'st70.tsp.gz', 'eil51.tsp.gz', 'gr48.tsp.gz']
+    datasets_alt = ['bayg29.tsp', 'gr24.tsp', 'st70.tsp', 'eil51.tsp', 'gr48.tsp']
 
     algorithms = {
         'NBGA': NBGA,
@@ -628,12 +629,19 @@ def run_algorithms(dataset_dir):
         for alg_name, alg_class in algorithms.items():
             print(f"Running {alg_name}...")
 
+            # Adaptive population size based on problem size
             pop_size = min(100, max(50, len(distance_matrix) * 2))
             
-            generations = 20000
+            # Adaptive generations based on problem complexity
+            # if len(distance_matrix) <= 30:
+            #     generations = 15000
+            # elif len(distance_matrix) <= 50:
+            #     generations = 20000
+            # else:
+            #     generations = 25000
             
-            # USE THIS IF NEEDED LIKE 500 GENERATIONS OR USE THE ABOVE
-            # generations = min(500, max(200, len(distance_matrix) * 5))
+            # Fixed generations for all datasets
+            generations = 500
 
             start_time = time.time()
             solver = alg_class(distance_matrix, pop_size=pop_size, generations=generations)
@@ -651,34 +659,115 @@ def run_algorithms(dataset_dir):
     return results, dataset_names, list(algorithms.keys())
 
 def create_comparison_plot(results, dataset_names, algorithm_names):
-    plt.figure(figsize=(12, 8))
+    """Create a comprehensive comparison plot for all 4 algorithms across all 5 datasets"""
+    plt.figure(figsize=(16, 10))
 
     x = np.arange(len(dataset_names))
-    width = 0.2
+    width = 0.18  # Adjusted width for 4 algorithms
 
+    # Enhanced color scheme for better distinction
     colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
 
+    # Create bars for each algorithm
     for i, (alg_name, color) in enumerate(zip(algorithm_names, colors)):
         distances = [results[alg_name][j]['distance'] for j in range(len(dataset_names))]
-        plt.bar(x + i * width, distances, width, label=alg_name, color=color, alpha=0.8)
+        bars = plt.bar(x + i * width, distances, width, 
+                      label=alg_name, color=color, alpha=0.8, 
+                      edgecolor='black', linewidth=0.5)
+        
+        # Add value labels on top of bars
+        for j, (bar, distance) in enumerate(zip(bars, distances)):
+            plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + max(distances) * 0.01, 
+                    f'{distance:.0f}', ha='center', va='bottom', fontsize=9, fontweight='bold')
 
-    plt.xlabel('Datasets', fontsize=12)
-    plt.ylabel('Best Tour Distance', fontsize=12)
-    plt.title('TSP Algorithm Comparison: Best Tour Distance by Dataset', fontsize=14, fontweight='bold')
-    plt.xticks(x + width * 1.5, dataset_names)
-    plt.legend(fontsize=11)
-    plt.grid(axis='y', alpha=0.3)
-
-    for i, alg_name in enumerate(algorithm_names):
-        distances = [results[alg_name][j]['distance'] for j in range(len(dataset_names))]
-        for j, distance in enumerate(distances):
-            plt.text(j + i * width, distance + max(distances) * 0.01, f'{distance:.0f}', ha='center', va='bottom', fontsize=9)
-
+    plt.xlabel('TSP Datasets', fontsize=14, fontweight='bold')
+    plt.ylabel('Best Tour Distance', fontsize=14, fontweight='bold')
+    plt.title('Comprehensive TSP Algorithm Comparison\nBest Tour Distance Across All Datasets', 
+              fontsize=16, fontweight='bold', pad=20)
+    
+    # Adjust x-axis labels
+    plt.xticks(x + width * 1.5, dataset_names, fontsize=12)
+    plt.yticks(fontsize=12)
+    
+    # Enhanced legend
+    plt.legend(fontsize=12, loc='upper left', frameon=True, fancybox=True, shadow=True)
+    
+    # Grid for better readability
+    plt.grid(axis='y', alpha=0.3, linestyle='--')
+    
+    # Add dataset size information as secondary x-axis labels
+    dataset_sizes = []
+    for name in dataset_names:
+        if name == 'bayg29':
+            dataset_sizes.append('(29 cities)')
+        elif name == 'gr24':
+            dataset_sizes.append('(24 cities)')
+        elif name == 'st70':
+            dataset_sizes.append('(70 cities)')
+        elif name == 'eil51':
+            dataset_sizes.append('(51 cities)')
+        elif name == 'gr48':
+            dataset_sizes.append('(48 cities)')
+        else:
+            dataset_sizes.append('')
+    
+    # Add secondary labels for city counts
+    ax2 = plt.twiny()
+    ax2.set_xlim(plt.xlim())
+    ax2.set_xticks(x + width * 1.5)
+    ax2.set_xticklabels(dataset_sizes, fontsize=10, style='italic')
+    ax2.tick_params(axis='x', length=0)
+    
+    # Adjust layout to prevent label cutoff
     plt.tight_layout()
+    
+    # Add a text box with summary statistics
+    summary_text = "Algorithm Performance Summary:\n"
+    avg_performance = {}
+    for alg in algorithm_names:
+        avg_distance = np.mean([results[alg][i]['distance'] for i in range(len(dataset_names))])
+        avg_time = np.mean([results[alg][i]['time'] for i in range(len(dataset_names))])
+        avg_performance[alg] = (avg_distance, avg_time)
+    
+    sorted_algs = sorted(avg_performance.items(), key=lambda x: x[1][0])
+    for rank, (alg, (avg_dist, avg_time)) in enumerate(sorted_algs, 1):
+        summary_text += f"{rank}. {alg}: {avg_dist:.1f} avg distance\n"
+    
+    plt.figtext(0.02, 0.02, summary_text, fontsize=10, 
+                bbox=dict(boxstyle="round,pad=0.3", facecolor="lightgray", alpha=0.8))
+    
     plt.show()
 
+    # Additional detailed performance analysis
+    print("\n" + "="*60)
+    print("DETAILED PERFORMANCE ANALYSIS")
+    print("="*60)
+    
+    # Performance by dataset
+    for i, dataset_name in enumerate(dataset_names):
+        print(f"\n{dataset_name.upper()} Dataset Results:")
+        dataset_results = [(alg, results[alg][i]['distance'], results[alg][i]['time']) 
+                          for alg in algorithm_names]
+        dataset_results.sort(key=lambda x: x[1])  # Sort by distance
+        
+        for rank, (alg, dist, exec_time) in enumerate(dataset_results, 1):
+            print(f"  {rank}. {alg:<12}: {dist:>8.2f} distance, {exec_time:>6.2f}s")
+    
+    # Statistical analysis
+    print(f"\n{'STATISTICAL SUMMARY':<60}")
+    print("-" * 60)
+    for alg in algorithm_names:
+        distances = [results[alg][i]['distance'] for i in range(len(dataset_names))]
+        times = [results[alg][i]['time'] for i in range(len(dataset_names))]
+        
+        print(f"{alg:<12}: Avg={np.mean(distances):>7.1f}, "
+              f"Std={np.std(distances):>6.1f}, "
+              f"Min={np.min(distances):>7.1f}, "
+              f"Max={np.max(distances):>7.1f}, "
+              f"AvgTime={np.mean(times):>5.1f}s")
+
 def main():
-    dataset_dir = "../tsp_dataset"  # You can change this path as needed
+    dataset_dir = "../tsp_dataset"  # Change this path as needed
     random.seed(42)
     np.random.seed(42)
 

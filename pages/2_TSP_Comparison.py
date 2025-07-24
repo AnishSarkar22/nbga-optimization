@@ -591,8 +591,8 @@ def run_algorithms(dataset_dir):
     """Run all algorithms on the three datasets and return serializable results"""
     
     # Dataset files (relative to dataset_dir)
-    datasets = ['bayg29.tsp.gz', 'gr24.tsp.gz', 'st70.tsp.gz']
-    datasets_alt = ['bayg29.tsp', 'gr24.tsp', 'st70.tsp']
+    datasets = ['bayg29.tsp.gz', 'gr24.tsp.gz', 'st70.tsp.gz', 'eil51.tsp.gz', 'gr48.tsp.gz']
+    datasets_alt = ['bayg29.tsp', 'gr24.tsp', 'st70.tsp', 'eil51.tsp', 'gr48.tsp']
     
     algorithms = {
         'NBGA': NBGA,
@@ -654,33 +654,68 @@ def run_algorithms(dataset_dir):
     return results, dataset_names, list(algorithms.keys())
 
 def create_comparison_plot(results, dataset_names, algorithm_names):
-    """Create the comparison plot"""
-    plt.figure(figsize=(12, 8))
-    
+    """Create a comprehensive comparison plot for all 4 algorithms across all datasets"""
+    plt.figure(figsize=(16, 10))
+
     x = np.arange(len(dataset_names))
-    width = 0.2
-    
+    width = 0.18  # Adjusted width for 4 algorithms
+
+    # Enhanced color scheme for better distinction
     colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
-    
+
+    # Create bars for each algorithm
     for i, (alg_name, color) in enumerate(zip(algorithm_names, colors)):
         distances = [results[alg_name][j]['distance'] for j in range(len(dataset_names))]
-        plt.bar(x + i * width, distances, width, label=alg_name, color=color, alpha=0.8)
+        bars = plt.bar(x + i * width, distances, width, 
+                      label=alg_name, color=color, alpha=0.8, 
+                      edgecolor='black', linewidth=0.5)
+        
+        # Add value labels on top of bars
+        for j, (bar, distance) in enumerate(zip(bars, distances)):
+            plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + max(distances) * 0.01, 
+                    f'{distance:.0f}', ha='center', va='bottom', fontsize=9, fontweight='bold')
+
+    plt.xlabel('TSP Datasets', fontsize=14, fontweight='bold')
+    plt.ylabel('Best Tour Distance', fontsize=14, fontweight='bold')
+    plt.title('Comprehensive TSP Algorithm Comparison\nBest Tour Distance Across All Datasets', 
+              fontsize=16, fontweight='bold', pad=20)
     
-    plt.xlabel('Datasets', fontsize=12)
-    plt.ylabel('Best Tour Distance', fontsize=12)
-    plt.title('TSP Algorithm Comparison: Best Tour Distance by Dataset', fontsize=14, fontweight='bold')
-    plt.xticks(x + width * 1.5, dataset_names)
-    plt.legend(fontsize=11)
-    plt.grid(axis='y', alpha=0.3)
+    # Adjust x-axis labels
+    plt.xticks(x + width * 1.5, dataset_names, fontsize=12)
+    plt.yticks(fontsize=12)
     
-    # Add value labels on bars
-    for i, alg_name in enumerate(algorithm_names):
-        distances = [results[alg_name][j]['distance'] for j in range(len(dataset_names))]
-        for j, distance in enumerate(distances):
-            plt.text(j + i * width, distance + max(distances) * 0.01, 
-                    f'{distance:.0f}', ha='center', va='bottom', fontsize=9)
+    # Enhanced legend
+    plt.legend(fontsize=12, loc='upper left', frameon=True, fancybox=True, shadow=True)
     
+    # Grid for better readability
+    plt.grid(axis='y', alpha=0.3, linestyle='--')
+    
+    # Add dataset size information as secondary x-axis labels
+    dataset_sizes = []
+    for name in dataset_names:
+        if name == 'bayg29':
+            dataset_sizes.append('(29 cities)')
+        elif name == 'gr24':
+            dataset_sizes.append('(24 cities)')
+        elif name == 'st70':
+            dataset_sizes.append('(70 cities)')
+        elif name == 'eil51':
+            dataset_sizes.append('(51 cities)')
+        elif name == 'gr48':
+            dataset_sizes.append('(48 cities)')
+        else:
+            dataset_sizes.append('')
+    
+    # Add secondary labels for city counts
+    ax2 = plt.twiny()
+    ax2.set_xlim(plt.xlim())
+    ax2.set_xticks(x + width * 1.5)
+    ax2.set_xticklabels(dataset_sizes, fontsize=10, style='italic')
+    ax2.tick_params(axis='x', length=0)
+    
+    # Adjust layout to prevent label cutoff
     plt.tight_layout()
+    
     return plt.gcf()
 
 def main():
@@ -721,43 +756,77 @@ def main():
             st.pyplot(fig)
             plt.close(fig)  # Close the figure to free memory
             
-            # Create summary table
-            st.subheader("📊 Results Summary")
             
-            summary_data = []
+            # ----------- Single Comparison Table -----------
+            st.subheader("📊 Algorithm Comparison Results")
+
+            # Create comprehensive comparison data
+            comparison_data = []
             for i, dataset_name in enumerate(dataset_names):
-                row = {'Dataset': dataset_name}
+                # Get results for each algorithm on this dataset
+                dataset_results = {}
                 for alg_name in algorithm_names:
-                    row[f'{alg_name}_Distance'] = f"{results[alg_name][i]['distance']:.2f}"
-                    row[f'{alg_name}_Time'] = f"{results[alg_name][i]['time']:.2f}s"
-                summary_data.append(row)
-            
-            st.table(summary_data)
-            
-            # Performance ranking
-            st.subheader("🏆 Algorithm Ranking by Average Distance")
-            
+                    dataset_results[alg_name] = {
+                        'distance': results[alg_name][i]['distance'],
+                        'time': results[alg_name][i]['time']
+                    }
+                
+                # Find best distance for this dataset
+                best_distance = min(dataset_results[alg]['distance'] for alg in algorithm_names)
+                
+                # Create row for this dataset
+                row = {
+                    'Dataset': dataset_name.upper(),
+                    'Cities': f"{len(results[algorithm_names[0]][i]['tour'])}"
+                }
+                
+                # Add results for each algorithm
+                for alg_name in algorithm_names:
+                    distance = dataset_results[alg_name]['distance']
+                    time_taken = dataset_results[alg_name]['time']
+                    
+                    # Mark best result with bold formatting
+                    if distance == best_distance:
+                        row[f'{alg_name}_Distance'] = f"**{distance:.0f}**"
+                    else:
+                        row[f'{alg_name}_Distance'] = f"{distance:.0f}"
+                    
+                    row[f'{alg_name}_Time'] = f"{time_taken:.2f}s"
+                
+                comparison_data.append(row)
+
+            # Add average row
+            avg_row = {'Dataset': '**AVERAGE**', 'Cities': '-'}
+            for alg_name in algorithm_names:
+                avg_distance = np.mean([results[alg_name][i]['distance'] for i in range(len(dataset_names))])
+                avg_time = np.mean([results[alg_name][i]['time'] for i in range(len(dataset_names))])
+                avg_row[f'{alg_name}_Distance'] = f"**{avg_distance:.1f}**"
+                avg_row[f'{alg_name}_Time'] = f"**{avg_time:.2f}s**"
+
+            comparison_data.append(avg_row)
+
+            # Display the table
+            st.table(comparison_data)
+
+            # Add ranking summary
+            st.subheader("🏆 Overall Ranking by Average Distance")
             avg_performance = {}
             for alg in algorithm_names:
                 avg_distance = np.mean([results[alg][i]['distance'] for i in range(len(dataset_names))])
-                avg_time = np.mean([results[alg][i]['time'] for i in range(len(dataset_names))])
-                avg_performance[alg] = (avg_distance, avg_time)
+                avg_performance[alg] = avg_distance
+
+            sorted_algs = sorted(avg_performance.items(), key=lambda x: x[1])
+
+            ranking_text = ""
+            for rank, (alg, avg_dist) in enumerate(sorted_algs, 1):
+                rank_emoji = ["🥇", "🥈", "🥉", "4️⃣"][rank-1] if rank <= 4 else f"{rank}️⃣"
+                ranking_text += f"{rank_emoji} **{alg}** (Avg: {avg_dist:.1f})  \n"
+
+            st.markdown(ranking_text)
+
             
-            sorted_algs = sorted(avg_performance.items(), key=lambda x: x[1][0])
-            
-            ranking_data = []
-            for rank, (alg, (avg_dist, avg_time)) in enumerate(sorted_algs, 1):
-                ranking_data.append({
-                    'Rank': rank,
-                    'Algorithm': alg,
-                    'Avg Distance': f"{avg_dist:.2f}",
-                    'Avg Time': f"{avg_time:.2f}s"
-                })
-            
-            st.table(ranking_data)
-            
-            # Individual dataset performance
-            st.subheader("📈 Performance by Dataset")
+            # ---------- Individual dataset performance ----------
+            st.subheader("📈 Performance Analysis")
             
             for i, dataset_name in enumerate(dataset_names):
                 st.write(f"**{dataset_name.upper()}**")
@@ -831,6 +900,8 @@ def main():
     - bayg29.tsp.gz (or .tsp)
     - gr24.tsp.gz (or .tsp)
     - st70.tsp.gz (or .tsp)
+    - eil51.tsp.gz (or .tsp)
+    - gr48.tsp.gz (or .tsp)
     
     Supports both TSPLIB formats:
     - EUC_2D (coordinate-based)
@@ -858,7 +929,7 @@ def main():
         st.markdown("""
         **Algorithm Parameters:**
         - Population size: Adaptive (50-100 based on problem size)
-        - Generations: Adaptive (200-500 based on problem size)
+        - Generations: 500 (but for optimal answer use like 20000)
         - Mutation rate: 0.02 (NBGA, SWAP_GATSP)
         - Elite size: 20
         - Initial temperature: 1000 (SA algorithms)

@@ -21,4 +21,4 @@ def extract_all_gz_files(directory, output_dir):
             extract_gz_file(gz_path, output_path)
 
 # Usage
-extract_all_gz_files("../tsp_dataset", "../tsp_dataset_extracted")
+extract_all_gz_files("../tsp_dataset", "./tsp_dataset_extracted")
