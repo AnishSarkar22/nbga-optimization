@@ -11,7 +11,7 @@ def extract_gz_file(gz_filepath, output_filepath):
             f_out.write(f_in.read())
     print(f"Extracted {gz_filepath} to {output_filepath}")
 
-# Extract all .gz files in a directory
+
 def extract_all_gz_files(directory, output_dir):
     os.makedirs(output_dir, exist_ok=True)
     for filename in os.listdir(directory):
@@ -21,4 +21,4 @@ def extract_all_gz_files(directory, output_dir):
             extract_gz_file(gz_path, output_path)
 
 # Usage
-extract_all_gz_files("../tsp_dataset", "./tsp_dataset_extracted")
+extract_all_gz_files("./compressed", "./extracted")

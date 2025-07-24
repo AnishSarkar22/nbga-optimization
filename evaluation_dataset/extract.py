@@ -14,11 +14,12 @@ def extract_tour_file(gz_filepath, output_filepath=None):
 
 
 if __name__ == "__main__":
-    # Ensure the extracted directory exists
-    extracted_dir = "./evaluation_datasets_extracted"
+
+    extracted_dir = "./extracted"
     os.makedirs(extracted_dir, exist_ok=True)
-    # Extract all .opt.tour.gz files in the current directory
-    for fname in os.listdir('.'):
+    compressed_dir = "./compressed"
+    for fname in os.listdir(compressed_dir):
         if fname.endswith('.opt.tour.gz'):
+            gz_path = os.path.join(compressed_dir, fname)
             output_path = os.path.join(extracted_dir, fname[:-3])
-            extract_tour_file(fname, output_path)
+            extract_tour_file(gz_path, output_path)
