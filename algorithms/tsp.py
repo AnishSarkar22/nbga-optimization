@@ -634,7 +634,6 @@ def run_algorithms(dataset_dir):
             # generations = min(500, max(200, len(distance_matrix) * 5))
 
             start_time = time.time()
-
             solver = alg_class(distance_matrix, pop_size=pop_size, generations=generations)
             best_tour, best_distance = solver.solve()
             end_time = time.time()
