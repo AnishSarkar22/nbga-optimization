@@ -49,6 +49,7 @@ class TSPParser:
         else:
             raise ValueError(f"Unsupported edge weight type: {edge_weight_type}")
     
+    # for st70.tsp file
     @staticmethod
     def _parse_euc_2d(lines, dimension):
         """Parse EUC_2D format (coordinates given)"""
@@ -76,6 +77,7 @@ class TSPParser:
         
         return dist_matrix, coords
     
+    
     @staticmethod
     def _parse_explicit(lines, dimension, edge_weight_format):
         """Parse explicit distance matrix"""
@@ -94,14 +96,14 @@ class TSPParser:
         # Build distance matrix based on format
         dist_matrix = np.zeros((dimension, dimension))
         
-        if edge_weight_format == 'UPPER_ROW':
+        if edge_weight_format == 'UPPER_ROW':           # for bayg29.tsp file
             idx = 0
             for i in range(dimension):
                 for j in range(i + 1, dimension):
                     dist_matrix[i][j] = distances[idx]
                     dist_matrix[j][i] = distances[idx]
                     idx += 1
-        elif edge_weight_format == 'LOWER_DIAG_ROW':
+        elif edge_weight_format == 'LOWER_DIAG_ROW':    # for gr24.tsp file
             idx = 0
             for i in range(dimension):
                 for j in range(i + 1):
