@@ -12,6 +12,7 @@ import math
 import time
 from pathlib import Path
 import os
+from evaluate import calculate_error_metrics
 
 class TSPParser:
     """Parser for TSPLIB format files, handles both .tsp and .gz files"""
@@ -767,13 +768,16 @@ def create_comparison_plot(results, dataset_names, algorithm_names):
               f"AvgTime={np.mean(times):>5.1f}s")
 
 def main():
-    dataset_dir = "../tsp_dataset"  # Change this path as needed
+    dataset_dir = "../tsp_dataset/compressed"  # Change this path as needed
     random.seed(42)
     np.random.seed(42)
 
     start_time = time.time()
     try:
         results, dataset_names, algorithm_names = run_algorithms(dataset_dir)
+        
+        calculate_error_metrics(results, dataset_names) # calculates error using evaluate.py
+        
         total_time = time.time() - start_time
 
         print(f"Comparison completed in {total_time:.2f} seconds!")

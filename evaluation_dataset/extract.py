@@ -15,9 +15,9 @@ def extract_tour_file(gz_filepath, output_filepath=None):
 
 if __name__ == "__main__":
 
-    extracted_dir = "./extracted"
+    extracted_dir = "../evaluation_dataset/extracted"
     os.makedirs(extracted_dir, exist_ok=True)
-    compressed_dir = "./compressed"
+    compressed_dir = "../evaluation_dataset/compressed"
     for fname in os.listdir(compressed_dir):
         if fname.endswith('.opt.tour.gz'):
             gz_path = os.path.join(compressed_dir, fname)
