@@ -1,7 +1,7 @@
 
 # NBGA Optimization
 
-This project implements a **Neighborhood-Based Genetic Algorithm (NBGA)** for ligand optimization, inspired by the approach described in [An Evolutionary Approach to Drug-Design Using a Novel Neighbourhood Based Genetic Algorithm](https://arxiv.org/abs/1205.6412). The algorithm evolves ligand structures to minimize their interaction energy with a protein's active site, using a tree-based representation for ligands and a dynamic neighborhood topology for genetic operations.
+This project implements a **Neighborhood-Based Genetic Algorithm (NBGA)** for ligand optimization, inspired by the approach described in [An Evolutionary Approach to Drug-Design Using a Novel Neighbourhood Based Genetic Algorithm](https://arxiv.org/abs/1205.6412) research paper. The algorithm evolves ligand structures to minimize their interaction energy with a protein's active site, using a tree-based representation for ligands and a dynamic neighborhood topology for genetic operations.
 
 ## Features
 
@@ -21,8 +21,6 @@ This project implements a **Neighborhood-Based Genetic Algorithm (NBGA)** for li
 - **Visualization:** The evolution of the best fitness (energy) is plotted and can be smoothed for trend analysis.
 
 For more details, see the [original paper](https://arxiv.org/abs/1205.6412).
-
----
 
 ## Getting Started
 
@@ -66,16 +64,12 @@ streamlit run script.py
 
 This will launch a web interface where you can adjust algorithm parameters and visualize the optimization process.
 
----
-
 ## Usage
 
 - **NBGA Ligand Optimization**: Adjust parameters and run the genetic algorithm to optimize ligand binding.
 - **TSP Algorithm Comparison**: Select the TSP Comparison from the sidebar, choose your dataset directory, and run the comparison to visualize and compare algorithm performance.
 - View the best ligand found and its interaction energy.
 - Analyze the energy evolution plot for convergence trends.
-
----
 
 ## File Structure
 
@@ -91,8 +85,6 @@ This will launch a web interface where you can adjust algorithm parameters and v
 - `tsp_dataset/` — TSP datasets and extraction scripts.
 - Other scripts and data files as needed.
 
----
-
 ## Reference
 
 If you use this code or approach in your research, please cite:
@@ -101,7 +93,7 @@ If you use this code or approach in your research, please cite:
 > "An Evolutionary Approach to Drug-Design Using a Novel Neighbourhood Based Genetic Algorithm."  
 > [arXiv:1205.6412](https://arxiv.org/abs/1205.6412)
 
----
+This repository provides an implementation based on the above paper, with additional improvements and extensions.
 
 ## License
 
