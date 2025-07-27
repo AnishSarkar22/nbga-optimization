@@ -6,7 +6,7 @@ This project implements a **Neighborhood-Based Genetic Algorithm (NBGA)** for li
 ## Features
 
 - **NBGA implementation** for ligand-protein binding optimization.
-- **TSP Algorithm Comparison Tool**: Compare NBGA, SWAP_GATSP, OX_SIM, and MOC_SIM on classic TSP datasets with interactive plots and tables.
+- **TSP Algorithm Comparison Tool**: Compare NBGA, SWAP_GATSP, OX_SIM, and MOC_SIM on classic TSPLIB datasets with interactive plots and tables.
 - Ligand structure represented as a variable-length tree of functional groups.
 - Interaction energy calculated using a modified Lennard-Jones potential.
 - Streamlit integration for interactive parameter tuning and visualization.
@@ -83,6 +83,11 @@ This will launch a web interface where you can adjust algorithm parameters and v
 - `pages/1_Ligand_Optimization.py` — Script for Ligand Optimization.
 - `pages/2_TSP_Comparison.py` — Script for TSP algorithm comparison.
 - `requirements.txt` — Python dependencies.
+- `algorithms/ligand.py` — NBGA algorithm and utilities for ligand optimization.
+- `algorithms/tsp.py` — NBGA and other algorithms for TSP (original version).
+- `algorithms/tsp_enhanced.py` — Enhanced NBGA and TSP algorithms.
+- `evaluation_dataset/` — Reference optimal TSP datasets and extraction scripts.
+- `tsp_dataset/` — TSP datasets and extraction scripts.
 - Other scripts and data files as needed.
 
 ---
