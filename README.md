@@ -6,7 +6,7 @@ This project implements a **Neighborhood-Based Genetic Algorithm (NBGA)** for li
 ## Features
 
 - **NBGA implementation** for ligand-protein binding optimization.
-- **TSP Algorithm Comparison Tool**: Compare NBGA, SWAP_GATSP, OX_SIM, and MOC_SIM on classic TSPLIB datasets with interactive plots and tables.
+- **TSP Algorithm Comparison**: Compare NBGA, SWAP_GATSP, OX_SIM, and MOC_SIM on classic TSPLIB datasets with interactive plots and tables.
 - Ligand structure represented as a variable-length tree of functional groups.
 - Interaction energy calculated using a modified Lennard-Jones potential.
 - Streamlit integration for interactive parameter tuning and visualization.
@@ -71,7 +71,7 @@ This will launch a web interface where you can adjust algorithm parameters and v
 ## Usage
 
 - **NBGA Ligand Optimization**: Adjust parameters and run the genetic algorithm to optimize ligand binding.
-- **TSP Algorithm Comparison**: Select the TSP comparison tool from the sidebar, choose your dataset directory, and run the comparison to visualize and compare algorithm performance.
+- **TSP Algorithm Comparison**: Select the TSP Comparison from the sidebar, choose your dataset directory, and run the comparison to visualize and compare algorithm performance.
 - View the best ligand found and its interaction energy.
 - Analyze the energy evolution plot for convergence trends.
 
@@ -81,11 +81,12 @@ This will launch a web interface where you can adjust algorithm parameters and v
 
 - `Home.py` — Main NBGA implementation and Streamlit interface.
 - `pages/1_Ligand_Optimization.py` — Script for Ligand Optimization.
-- `pages/2_TSP_Comparison.py` — Script for TSP algorithm comparison.
+- `pages/2_TSP_Comparison.py` — Script for TSP algorithm Comparison.
 - `requirements.txt` — Python dependencies.
 - `algorithms/ligand.py` — NBGA algorithm and utilities for ligand optimization.
 - `algorithms/tsp.py` — NBGA and other algorithms for TSP (original version).
 - `algorithms/tsp_enhanced.py` — Enhanced NBGA and TSP algorithms.
+- `algorithms/README.md` — [Comparison and documentation of algorithms](algorithms/README.md).
 - `evaluation_dataset/` — Reference optimal TSP datasets and extraction scripts.
 - `tsp_dataset/` — TSP datasets and extraction scripts.
 - Other scripts and data files as needed.
