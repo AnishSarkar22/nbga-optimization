@@ -60,4 +60,4 @@ This section outlines the key differences and improvements introduced in `tsp_en
 
 **Summary:**
 
-`tsp_enhanced.py` is a significantly improved and more flexible implementation, offering better solution quality, advanced heuristics, and comprehensive analysis compared to the original `tsp.py`. It is recommended for research, benchmarking, and practical applications where high-quality TSP solutions are required.
+`tsp_enhanced.py` is a significantly improved and more flexible implementation, offering better solution quality, advanced heuristics, and comprehensive analysis compared to the original `tsp.py`.
