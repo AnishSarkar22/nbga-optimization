@@ -453,15 +453,15 @@ class NBGA(TSPSolver):
             if k == i or k == j:
                 continue
                 
-            l = (k + 1) % n
-            if l == i or l == j:
+            next_k = (k + 1) % n
+            if next_k == i or next_k == j:
                 continue
             
             # Calculate improvement
             old_cost = (self.distance_matrix[tour[i]][tour[j]] + 
-                       self.distance_matrix[tour[k]][tour[l]])
+                       self.distance_matrix[tour[k]][tour[next_k]])
             new_cost = (self.distance_matrix[tour[i]][tour[k]] + 
-                       self.distance_matrix[tour[j]][tour[l]])
+                       self.distance_matrix[tour[j]][tour[next_k]])
             
             if new_cost < old_cost:
                 # Perform reconnection

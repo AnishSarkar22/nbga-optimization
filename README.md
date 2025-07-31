@@ -7,6 +7,7 @@ This project implements a **Neighborhood-Based Genetic Algorithm (NBGA)** for li
 
 - **NBGA implementation** for ligand-protein binding optimization.
 - **TSP Algorithm Comparison**: Compare NBGA, SWAP_GATSP, OX_SIM, and MOC_SIM on classic TSPLIB datasets with interactive plots and tables.
+- See [algorithm documentation and comparisons](algorithms/README.md) for details on TSP implementations and improvements.
 - Ligand structure represented as a variable-length tree of functional groups.
 - Interaction energy calculated using a modified Lennard-Jones potential.
 - Streamlit integration for interactive parameter tuning and visualization.
