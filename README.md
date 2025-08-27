@@ -25,9 +25,9 @@ For more details, see the [original paper](https://arxiv.org/abs/1205.6412).
 
 ## Getting Started
 
-> **Python version:**  
-> This project uses Python **3.10.0** as specified in the `.python-version` file.  
-> It is recommended to use [pyenv](https://github.com/pyenv/pyenv) or ensure your environment matches this version.
+> **Dependency management:**  
+> All dependencies are managed using `pyproject.toml` and locked in `poetry.lock`.
+> It is recommended to use [Poetry](https://python-poetry.org/) to manage dependencies and the virtual environment
 
 ### 1. Clone the Repository
 
@@ -36,31 +36,23 @@ git clone https://github.com/AnishSarkar22/nbga-optimization.git
 cd NBGA-TSP
 ```
 
-### 2. Create and Activate a Virtual Environment
-
-It is recommended to use a virtual environment to manage dependencies:
+### 2. Set Up the Environment with Poetry
 
 ```bash
-# Create a virtual environment named .venv
-python3 -m venv .venv
+# Install Poetry if you don't have it
+pip install poetry
+
+# Install dependencies and create a virtual environment
+poetry install
 
 # Activate the virtual environment
-# On macOS/Linux:
-source .venv/bin/activate
-# On Windows:
-.venv\Scripts\activate
+poetry shell
 ```
 
-### 3. Install Dependencies
+### 3. Run the Streamlit App
 
 ```bash
-pip install -r requirements.txt
-```
-
-### 4. Run the Streamlit App
-
-```bash
-streamlit run script.py
+streamlit run Home.py
 ```
 
 This will launch a web interface where you can adjust algorithm parameters and visualize the optimization process.
@@ -77,10 +69,9 @@ This will launch a web interface where you can adjust algorithm parameters and v
 - `Home.py` — Main NBGA implementation and Streamlit interface.
 - `pages/1_Ligand_Optimization.py` — Script for Ligand Optimization.
 - `pages/2_TSP_Comparison.py` — Script for TSP algorithm Comparison.
-- `requirements.txt` — Python dependencies.
-- `algorithms/ligand.py` — NBGA algorithm and utilities for ligand optimization.
-- `algorithms/tsp.py` — NBGA and other algorithms for TSP (original version).
-- `algorithms/tsp_enhanced.py` — Enhanced NBGA and TSP algorithms.
+- `algorithms/ligand.ipynb` — NBGA algorithm and utilities for ligand optimization.
+- `algorithms/tsp.ipynb` — NBGA and other algorithms for TSP (original version).
+- `algorithms/tsp_enhanced.ipynb` — Enhanced NBGA and TSP algorithms.
 - `algorithms/README.md` — [Comparison and documentation of algorithms](algorithms/README.md).
 - `evaluation_dataset/` — Reference optimal TSP datasets and extraction scripts.
 - `tsp_dataset/` — TSP datasets and extraction scripts.
