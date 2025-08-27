@@ -12,7 +12,8 @@ dependencies = [
     "matplotlib (>=3.10.3,<4.0.0)",
     "numpy (>=2.2.6,<3.0.0)",
     "streamlit (>=1.46.1,<2.0.0)",
-    "pandas (>=2.3.0,<3.0.0)"
+    "pandas (>=2.3.0,<3.0.0)",
+    "ipykernel"
 ]
 
 
