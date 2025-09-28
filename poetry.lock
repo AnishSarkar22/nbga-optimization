@@ -1174,6 +1174,27 @@ files = [
 ]
 
 [[package]]
+name = "opfunu"
+version = "1.0.4"
+description = "Opfunu: An Open-source Python Library for Optimization Benchmark Functions"
+optional = false
+python-versions = "<3.12,>=3.7"
+groups = ["main"]
+files = [
+    {file = "opfunu-1.0.4-py3-none-any.whl", hash = "sha256:ca2af1816552cb28ac4eb71519627bc32e8000514b6b7b34a654f70afbbd2240"},
+    {file = "opfunu-1.0.4.tar.gz", hash = "sha256:1ae4e83f435c155d6a6ad28f6118d78df8c73d6827a59323167637d6a1d3bf07"},
+]
+
+[package.dependencies]
+matplotlib = ">=3.3.0"
+numpy = ">=1.16.5"
+Pillow = ">=9.1.0"
+requests = ">=2.27.0"
+
+[package.extras]
+dev = ["pytest (>=7.0)", "twine (>=4.0.1)"]
+
+[[package]]
 name = "packaging"
 version = "25.0"
 description = "Core utilities for Python packages"
@@ -2249,4 +2270,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<3.11"
-content-hash = "1e58aa8b52cac35a6d0b1b1ed9cf131035a55bb3652fb22ab1ac5b32f3ef2160"
+content-hash = "59480efbb84fa52191171c3e6375ce6a332cfb6abc8c923aa3754c1316977783"
